@@ -1,6 +1,12 @@
 ---
 <%
-  etcd_endpoints = link('etcd').instances.map { |server| "https://#{server.address}:2379" }.join(",")
+  etcd_endpoints = link('etcd').instances.map do |server|
+    if server.address == spec.address then
+      "https://127.0.0.1:2379"
+    else
+      "https://#{server.address}:2379"
+    end
+  end.join(",")
 
   admission_control_options = [
     "LimitRanger", "NamespaceExists",
