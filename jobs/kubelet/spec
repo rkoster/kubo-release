@@ -76,12 +76,10 @@ properties:
   kubedns-service-ip:
     description: The service IP for kube-dns, must match what is configured for kube-dns
     default: "10.100.200.10"
+  args:
+    description: this is a test
 
 consumes:
 - name: cloud-provider
   type: cloud-provider
   optional: true
-
-provides:
-- name: kubernetes-workers
-  type: kubernetes-workers
