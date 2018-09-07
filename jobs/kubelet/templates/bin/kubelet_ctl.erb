@@ -10,10 +10,12 @@ LOG_DIR=/var/vcap/sys/log/kubelet
 DATA_DIR=/var/vcap/store/kubernetes
 DOCKER_SOCKET=unix:///var/vcap/sys/run/docker/docker.sock
 
-<% iaas = nil %>
-<% if_p('cloud-provider') do |cloud_provider| %>
-  <% iaas = cloud_provider %>
-  cloud_provider="<%= cloud_provider %>"
+<%
+  cloud_provider = iaas = p('args').select{ |e| e["flag"] == "cloud-provider" }.last["value"]
+%>
+
+<% if iaas != nil %>
+cloud_provider="<%= cloud_provider %>"
 <% end %>
 
 <% if_link('cloud-provider') do |cloud_provider| %>
