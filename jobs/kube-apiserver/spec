@@ -24,6 +24,8 @@ packages:
 - kubernetes
 
 properties:
+  args:
+    description: Kubernetes arguments to be passed to the k8s binary
   admin-username:
     description: The admin username for the Kubernetes cluster
   admin-password:
