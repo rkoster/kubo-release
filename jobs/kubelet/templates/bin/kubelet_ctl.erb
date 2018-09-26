@@ -82,6 +82,8 @@ get_hostname_override() {
   echo $hostname_override
 }
 
+processes:
+
 start_kubelet() {
   ln -s -f /var/vcap/jobs/kubelet/packages/cni/bin/nsenter /usr/bin/nsenter
 
