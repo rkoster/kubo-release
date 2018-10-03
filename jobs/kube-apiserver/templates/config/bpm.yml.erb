@@ -10,38 +10,30 @@
   end
 
   etcd_endpoints = link('etcd').instances.map { |server| get_url(server, 2379) }.join(",")
-
-  admission_control_options = [
-    "LimitRanger",
-    "DefaultTolerationSeconds", "ValidatingAdmissionWebhook",
-    "NamespaceLifecycle","ResourceQuota","ServiceAccount",
-    "DefaultStorageClass", "MutatingAdmissionWebhook"]
-
-  if p('deny_escalating_exec')
-    admission_control_options.push("DenyEscalatingExec")
-  end
-
-  if p('security-context-deny')
-    admission_control_options.push("SecurityContextDeny")
-  end
 %>
 processes:
 - name: kube-apiserver
   executable: /var/vcap/packages/kubernetes/bin/kube-apiserver
   args:
-  - --anonymous-auth=<%= p('anonymous_auth') %>
-  - --allow-privileged=<%= p('allow_privileged') %>
+	<% p('args').each do |flag, value|
+    if_p("args."+flag) do |v|
+      argString = "--#{flag}"
+      if v
+        if v.is_a? Array
+          values = v.join(",")
+        else
+          values = v
+        end
+        argString += "=#{values}" %>
+  - <%= argString %><%
+      end
+    end
+  end %>
   - --apiserver-count=<%= link('kube-apiserver').instances.size %>
-  - --bind-address=0.0.0.0
   <% if_link('cloud-provider') do |cloud_provider| %>
   - --cloud-provider=<%= cloud_provider.p('cloud-provider.type') %>
   - --cloud-config=/var/vcap/jobs/kube-apiserver/config/cloud-provider.ini
   <% end %>
-  - --kubelet-client-key=/var/vcap/jobs/kube-apiserver/config/kubelet-client-key.pem
-  - --kubelet-client-certificate=/var/vcap/jobs/kube-apiserver/config/kubelet-client-cert.pem
-  - --enable-admission-plugins=<%= admission_control_options.join(",") %>
-  - --disable-admission-plugins=PersistentVolumeLabel
-  - --enable-bootstrap-token-auth
   - --enable-swagger-ui
   - --etcd-servers=<%= etcd_endpoints %>
   - --etcd-cafile=/var/vcap/jobs/kube-apiserver/config/etcd-ca.crt
