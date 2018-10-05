@@ -14,8 +14,7 @@
 processes:
 - name: kube-apiserver
   executable: /var/vcap/packages/kubernetes/bin/kube-apiserver
-  args:
-	<% p('args').each do |flag, value|
+  args: <% p('args').each do |flag, value|
     if_p("args."+flag) do |v|
       argString = "--#{flag}"
       if v
@@ -34,18 +33,10 @@ processes:
   - --cloud-provider=<%= cloud_provider.p('cloud-provider.type') %>
   - --cloud-config=/var/vcap/jobs/kube-apiserver/config/cloud-provider.ini
   <% end %>
-  - --enable-swagger-ui
   - --etcd-servers=<%= etcd_endpoints %>
   - --etcd-cafile=/var/vcap/jobs/kube-apiserver/config/etcd-ca.crt
-  - <% if_p('feature_gates') do |feature_gates| %>
-  - --feature-gates=<%= feature_gates.flat_map {|k,v| "#{k}=#{v}"}.join(",") %>
-  - <% end %>
   - --etcd-certfile=/var/vcap/jobs/kube-apiserver/config/etcd-client.crt
   - --etcd-keyfile=/var/vcap/jobs/kube-apiserver/config/etcd-client.key
-  - --kubelet-https
-  - --secure-port=8443
-  - --service-account-key-file=/var/vcap/jobs/kube-apiserver/config/service-account-public-key.pem
-  - --service-account-lookup
   - --service-cluster-ip-range=<%= p('service-cluster-cidr') %>
   - --service-node-port-range=30000-32767
   - --tls-cert-file=/var/vcap/jobs/kube-apiserver/config/kubernetes.pem

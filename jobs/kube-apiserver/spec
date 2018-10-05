@@ -53,9 +53,6 @@ properties:
       Requests that are not rejected by another authentication method are treated
       as anonymous requests. Anonymous requests have a username of system:anonymous,
       and a group name of system:unauthenticated.
-  args.apiserver-count:
-    description: The number of apiservers running in the cluster, must be a positive
-      number. (In use when --endpoint-reconciler-type=master-count is enabled.)
   args.audit-log-batch-buffer-size:
     description: The size of the buffer to store events before batching and writing.
       Only used in batch mode.
@@ -183,11 +180,6 @@ properties:
     description: If set, any request presenting a client certificate signed by one
       of the authorities in the client-ca-file is authenticated with an identity corresponding
       to the CommonName of the client certificate.
-  args.cloud-config:
-    description: The path to the cloud provider configuration file. Empty string for
-      no configuration file.
-  args.cloud-provider:
-    description: The provider for cloud services. Empty string for no provider.
   args.contention-profiling:
     description: Enable lock contention profiling, if profiling is enabled
   args.cors-allowed-origins:
@@ -256,8 +248,6 @@ properties:
   args.etcd-quorum-read:
     description: If true, enable quorum read. It defaults to true and is strongly
       recommended not setting to false.
-  args.etcd-servers:
-    description: List of etcd servers to connect with (scheme://ip:port), comma separated.
   args.etcd-servers-overrides:
     description: 'Per-resource etcd servers overrides, comma separated. The individual
       override format: group/resource#servers, where servers are URLs, semicolon separated.'
@@ -551,8 +541,6 @@ properties:
   enable_audit_logs:
     description: Enables audit logs
     default: true
-  feature_gates:
-    description: A map of key=value pairs that describe alpha or experimental features.
   http_proxy:
     description: http_proxy env var for the kubernetes-api binary (i.e. for cloud
       provider interactions)
