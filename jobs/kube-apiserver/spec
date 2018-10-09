@@ -248,6 +248,8 @@ properties:
   args.etcd-quorum-read:
     description: If true, enable quorum read. It defaults to true and is strongly
       recommended not setting to false.
+  args.etcd-servers:
+    description: List of etcd servers to connect with (scheme://ip:port), comma separated.
   args.etcd-servers-overrides:
     description: 'Per-resource etcd servers overrides, comma separated. The individual
       override format: group/resource#servers, where servers are URLs, semicolon separated.'
@@ -538,9 +540,6 @@ properties:
       number. It takes effect when watch-cache is enabled. Some resources (replicationcontrollers,
       endpoints, nodes, pods, services, apiservices.apiregistration.k8s.io) have system
       defaults set by heuristics, others default to default-watch-cache-size'
-  enable_audit_logs:
-    description: Enables audit logs
-    default: true
   http_proxy:
     description: http_proxy env var for the kubernetes-api binary (i.e. for cloud
       provider interactions)
@@ -557,40 +556,14 @@ properties:
     description: The password for the kubelet drain user
   kubelet-password:
     description: The password for the kubelet user
-  logging-level:
+  args.v:
     description: V-leveled logging at the specified level. See https://github.com/golang/glog
     default: 2
   no_proxy:
     description: no_proxy env var for the kubernetes-api binary (i.e. for cloud provider
       interactions)
-  oidc.ca:
-    description: Certificate for the CA that signed your identity provider’s web certificate
-  oidc.client-id:
-    description: A client id that all tokens must be issued for
-    example: {}
-  oidc.groups-claim:
-    description: JWT claim to use as the user’s group
-    example: {}
-  oidc.groups-prefix:
-    description: Prefix prepended to group claims to prevent clashes
-    example: {}
-  oidc.issuer-url:
-    description: URL of the provider which allows the API server to discover public
-      signing keys
-  oidc.username-claim:
-    description: JWT claim to use as the user name
-    example: {}
-  oidc.username-prefix:
-    description: Prefix prepended to username claims to prevent clashes
-    example: {}
-  port:
-    default: 1235
-    example: {}
   service-account-public-key:
     description: Public key used to verify service account tokens
-  service-cluster-cidr:
-    description: The service cluster IP cidr for hosting cluster services
-    default: 10.100.200.0/24
   tls.kubelet-client:
     description: kubelet client cert
   tls.kubernetes.ca:
