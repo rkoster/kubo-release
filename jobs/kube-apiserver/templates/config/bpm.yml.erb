@@ -27,6 +27,8 @@ processes:
       if v
         if v.is_a? Array
           values = v.join(",")
+        elsif v.is_a? Hash
+          values = v.map { |k,v| "#{k}=#{v}" }.join(",")
         else
           values = v
         end
