@@ -48,6 +48,8 @@ properties:
       default interface will be used.
   args.allow-privileged:
     description: If true, allow privileged containers. [default=false]
+  args.alsologtostderr:
+    description: log to standard error as well as files
   args.anonymous-auth:
     description: Enables anonymous requests to the secure port of the API server.
       Requests that are not rejected by another authentication method are treated
@@ -180,12 +182,20 @@ properties:
     description: If set, any request presenting a client certificate signed by one
       of the authorities in the client-ca-file is authenticated with an identity corresponding
       to the CommonName of the client certificate.
+  args.cloud-provider-gce-lb-src-cidrs:
+    description: CIDRs opened in GCE firewall for LB traffic proxy & health checks
   args.contention-profiling:
     description: Enable lock contention profiling, if profiling is enabled
   args.cors-allowed-origins:
     description: List of allowed origins for CORS, comma separated.  An allowed origin
       can be a regular expression to support subdomain matching. If this list is empty
       CORS will not be enabled.
+  args.default-not-ready-toleration-seconds:
+    description: Indicates the tolerationSeconds of the toleration for notReady:NoExecute
+      that is added by default to every pod that does not already have such a toleration.
+  args.default-unreachable-toleration-seconds:
+    description: Indicates the tolerationSeconds of the toleration for unreachable:NoExecute
+      that is added by default to every pod that does not already have such a toleration.
   args.default-watch-cache-size:
     description: Default watch cache size. If zero, watch cache will be disabled for
       resources that do not have a default watch size set.
@@ -354,6 +364,12 @@ properties:
     description: If non-zero, the Kubernetes master service (which apiserver creates/maintains)
       will be of type NodePort, using this as the value of the port. If zero, the
       Kubernetes master service will be of type ClusterIP.
+  args.log_backtrace_at:
+    description: when logging hits line file:N, emit a stack trace
+  args.log_dir:
+    description: If non-empty, write log files in this directory
+  args.logtostderr:
+    description: log to standard error instead of files
   args.master-service-namespace:
     description: 'DEPRECATED: the namespace from which the kubernetes master services
       should be injected into pods.'
@@ -490,6 +506,8 @@ properties:
   args.ssh-user:
     description: If non-empty, use secure SSH proxy to the nodes, using this user
       name
+  args.stderrthreshold:
+    description: logs at or above this threshold go to stderr
   args.storage-backend:
     description: 'The storage backend for persistence. Options: ''etcd3'' (default),
       ''etcd2''.'
@@ -531,6 +549,10 @@ properties:
   args.token-auth-file:
     description: If set, the file that will be used to secure the secure port of the
       API server via token authentication.
+  args.v:
+    description: log level for V logs
+  args.vmodule:
+    description: comma-separated list of pattern=N settings for file-filtered logging
   args.watch-cache:
     description: Enable watch caching in the apiserver
   args.watch-cache-sizes:
@@ -556,9 +578,6 @@ properties:
     description: The password for the kubelet drain user
   kubelet-password:
     description: The password for the kubelet user
-  args.v:
-    description: V-leveled logging at the specified level. See https://github.com/golang/glog
-    default: 2
   no_proxy:
     description: no_proxy env var for the kubernetes-api binary (i.e. for cloud provider
       interactions)
