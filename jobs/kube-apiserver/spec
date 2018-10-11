@@ -20,40 +20,39 @@ templates:
 packages:
 - kubernetes
 properties:
-  bosh-args:
-    admin-password:
-      description: The password for the admin account
-    admin-username:
-      description: The admin username for the Kubernetes cluster
-    http_proxy:
-      description: http_proxy env var for the kubernetes-api binary (i.e. for cloud
-        provider interactions)
-    https_proxy:
-      description: https_proxy env var for the kubernetes-api binary (i.e. for cloud
-        provider interactions)
-    kube-controller-manager-password:
-      description: The password for the system:kube-controller-manager user
-    kube-proxy-password:
-      description: The password for the kube-proxy user
-    kube-scheduler-password:
-      description: The password for the system:kube-scheduler user
-    kubelet-drain-password:
-      description: The password for the kubelet drain user
-    kubelet-password:
-      description: The password for the kubelet user
-    no_proxy:
-      description: no_proxy env var for the kubernetes-api binary (i.e. for cloud
-        provider interactions)
-    service-account-public-key:
-      description: Public key used to verify service account tokens
-    tls.kubelet-client:
-      description: kubelet client cert
-    tls.kubernetes.ca:
-      description: CA Certificate for the Kubernetes master
-    tls.kubernetes.certificate:
-      description: Certificate for the Kubernetes master
-    tls.kubernetes.private_key:
-      description: Private key for the Kubernetes master
+  admin-password:
+    description: The password for the admin account
+  admin-username:
+    description: The admin username for the Kubernetes cluster
+  http_proxy:
+    description: http_proxy env var for the kubernetes-api binary (i.e. for cloud
+      provider interactions)
+  https_proxy:
+    description: https_proxy env var for the kubernetes-api binary (i.e. for cloud
+      provider interactions)
+  kube-controller-manager-password:
+    description: The password for the system:kube-controller-manager user
+  kube-proxy-password:
+    description: The password for the kube-proxy user
+  kube-scheduler-password:
+    description: The password for the system:kube-scheduler user
+  kubelet-drain-password:
+    description: The password for the kubelet drain user
+  kubelet-password:
+    description: The password for the kubelet user
+  no_proxy:
+    description: no_proxy env var for the kubernetes-api binary (i.e. for cloud
+      provider interactions)
+  service-account-public-key:
+    description: Public key used to verify service account tokens
+  tls.kubelet-client:
+    description: kubelet client cert
+  tls.kubernetes.ca:
+    description: CA Certificate for the Kubernetes master
+  tls.kubernetes.certificate:
+    description: Certificate for the Kubernetes master
+  tls.kubernetes.private_key:
+    description: Private key for the Kubernetes master
   k8s-args:
     address:
       description: 'DEPRECATED: see --insecure-bind-address instead.'

@@ -34,7 +34,7 @@ processes:
             values = v
           end
           argString += "=#{values}" %>
-    - <%= '"' + argString + '"' %><%
+  - <%= '"' + argString + '"' %><%
         end
       end
     end
@@ -48,15 +48,15 @@ processes:
   - --etcd-servers=<%= etcd_endpoints %>
   <% end %>
   env:
-    <% if_p('bosh-args.no_proxy') do |no_proxy| %>
+    <% if_p('no_proxy') do |no_proxy| %>
     NO_PROXY: <%= no_proxy %>
     no_proxy: <%= no_proxy %>
     <% end %>
-    <% if_p('bosh-args.https_proxy') do |https_proxy| %>
+    <% if_p('https_proxy') do |https_proxy| %>
     HTTPS_PROXY: <%= https_proxy %>
     https_proxy: <%= https_proxy %>
     <% end %>
-    <% if_p('bosh-args.http_proxy') do |http_proxy| %>
+    <% if_p('http_proxy') do |http_proxy| %>
     HTTP_PROXY: <%= http_proxy %>
     http_proxy: <%= http_proxy %>
     <% end %>

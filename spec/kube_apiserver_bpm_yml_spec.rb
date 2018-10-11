@@ -48,9 +48,7 @@ describe 'kube-apiserver' do
       'kube-apiserver',
       'config/bpm.yml',
       {
-        'bosh-args' => {
-          'http_proxy' => 'proxy.example.com:8090'
-        }
+        'http_proxy' => 'proxy.example.com:8090'
       },
       link_spec
     )
@@ -65,9 +63,7 @@ describe 'kube-apiserver' do
       'kube-apiserver',
       'config/bpm.yml',
       {
-        'bosh-args' => {
-          'https_proxy' => 'proxy.example.com:8100'
-        }
+        'https_proxy' => 'proxy.example.com:8100'
       },
       link_spec
     )
@@ -82,9 +78,7 @@ describe 'kube-apiserver' do
       'kube-apiserver',
       'config/bpm.yml',
       {
-        'bosh-args' => {
-          'no_proxy' => 'noproxy.example.com,noproxy.example.net'
-        }
+        'no_proxy' => 'noproxy.example.com,noproxy.example.net'
       },
       link_spec
     )
@@ -108,6 +102,7 @@ describe 'kube-apiserver' do
       },
       link_spec
     )
+
     bpm_yml = YAML.safe_load(rendered_kube_apiserver_bpm_yml)
     expect(bpm_yml['processes'][0]['args']).to include('--feature-gates=CustomFeature1=true,CustomFeature2=false')
   end
