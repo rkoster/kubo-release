@@ -1,0 +1,25 @@
+---
+processes:
+- name: kubelet
+  executable: /var/vcap/jobs/kubelet/bin/kubelet_ctl
+  hooks:
+    pre_start: /var/vcap/jobs/kubelet/bin/pre-start
+  additional_volumes:
+    - path: /var/vcap/store/kubernetes
+      writable: true
+    - path: /var/vcap/data/docker
+  unsafe:
+    privileged: true
+    unrestricted_volumes:
+      - path: /proc # Network plugin CNI
+        allow_executions: true
+        writable: true
+      - path: /var/run # /var/run/dockershim.sock
+        allow_executions: true
+        writable: true
+        mount_only: true
+      - path: /var/vcap/sys/run/docker # Docker socket
+        writable: true
+      - path: /sys/fs/cgroup # CPU mountpoint
+        allow_executions: true
+        mount_only: true

@@ -4,8 +4,6 @@ NAME="${0##*/}"
 
 export PATH=/var/vcap/packages/kubernetes/bin/:/var/vcap/packages/docker/sbin/:/var/vcap/packages/socat/bin/:$PATH
 
-RUN_DIR=/var/vcap/sys/run/kubernetes
-PIDFILE=$RUN_DIR/kubelet.pid
 LOG_DIR=/var/vcap/sys/log/kubelet
 DATA_DIR=/var/vcap/store/kubernetes
 DOCKER_SOCKET=unix:///var/vcap/sys/run/docker/docker.sock
@@ -34,22 +32,6 @@ DOCKER_SOCKET=unix:///var/vcap/sys/run/docker/docker.sock
   labels += p("labels").map {|k,v| "#{k}=#{v}"}
   labels = labels.join(',')
 %>
-
-# shellcheck disable=SC1091
-. /var/vcap/packages/pid_utils/pid_utils.sh
-
-setup_directories() {
-  mkdir -p "$RUN_DIR" "$LOG_DIR" "$DATA_DIR"
-  chown -R vcap:vcap "$RUN_DIR" "$LOG_DIR" "$DATA_DIR"
-}
-
-send_process_stdout_to_logfile() {
-  exec 1>> "$LOG_DIR/$NAME.stdout.log"
-}
-
-send_process_stderr_to_logfile() {
-  exec 2>> "$LOG_DIR/$NAME.stderr.log"
-}
 
 <% if_p('http_proxy') do |http_proxy| %>
 export http_proxy=<%= http_proxy %>
@@ -84,8 +66,6 @@ get_hostname_override() {
 }
 
 start_kubelet() {
-  ln -s -f /var/vcap/jobs/kubelet/packages/cni/bin/nsenter /usr/bin/nsenter
-
   zone_label=""
 
   if [[ "vsphere" == "$cloud_provider"  ]]; then
@@ -123,47 +103,9 @@ start_kubelet() {
   2>> $LOG_DIR/kubelet.stderr.log
 }
 
-stop_kubelet() {
-  kill_and_wait "$PIDFILE"
+main() {
+  delete_stale_drained_node
+  start_kubelet
 }
 
-pid() {
-  head -1 "$PIDFILE"
-}
-
-stop_associated_logging_processes() {
-  # shellcheck disable=SC2046
-  pkill -g $(get_group_pid)
-}
-
-get_group_pid() {
-  ps -ho pgrp "$(pid)"
-}
-
-
-case $1 in
-
-  start)
-
-    setup_directories
-    send_process_stdout_to_logfile
-    send_process_stderr_to_logfile
-
-    pid_guard "$PIDFILE" "Kubelet"
-
-    echo $$ > $PIDFILE
-
-    delete_stale_drained_node
-    start_kubelet
-    ;;
-
-  stop)
-    stop_associated_logging_processes
-    stop_kubelet
-    ;;
-
-  *)
-    echo "Usage: $0 {start|stop}"
-    ;;
-
-esac
+main

@@ -8,7 +8,7 @@ set -eu
 export PATH=/var/vcap/packages/kubernetes/bin:$PATH
 
 LOG_DIR=/var/vcap/sys/log/kubelet
-PIDFILE=/var/vcap/sys/run/kubernetes/kubelet.pid
+PIDFILE=/var/vcap/sys/run/bpm/kubelet/kubelet.pid
 
 trap ensure_safe_exit EXIT
 
