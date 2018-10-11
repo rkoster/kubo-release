@@ -48,7 +48,9 @@ describe 'kube-apiserver' do
       'kube-apiserver',
       'config/bpm.yml',
       {
-        'http_proxy' => 'proxy.example.com:8090'
+        'bosh-args' => {
+          'http_proxy' => 'proxy.example.com:8090'
+        }
       },
       link_spec
     )
@@ -63,7 +65,9 @@ describe 'kube-apiserver' do
       'kube-apiserver',
       'config/bpm.yml',
       {
-        'https_proxy' => 'proxy.example.com:8100'
+        'bosh-args' => {
+          'https_proxy' => 'proxy.example.com:8100'
+        }
       },
       link_spec
     )
@@ -78,7 +82,9 @@ describe 'kube-apiserver' do
       'kube-apiserver',
       'config/bpm.yml',
       {
-        'no_proxy' => 'noproxy.example.com,noproxy.example.net'
+        'bosh-args' => {
+          'no_proxy' => 'noproxy.example.com,noproxy.example.net'
+        }
       },
       link_spec
     )
@@ -93,7 +99,7 @@ describe 'kube-apiserver' do
       'kube-apiserver',
       'config/bpm.yml',
       {
-        'args' => {
+        'k8s-args' => {
           'feature-gates' => {
             'CustomFeature1' => true,
             'CustomFeature2' => false
@@ -111,7 +117,7 @@ describe 'kube-apiserver' do
       'kube-apiserver',
       'config/bpm.yml',
       {
-        'args' => {
+        'k8s-args' => {
           'oidc-username-prefix' => 'oidc:',
           'oidc-groups-prefix' => 'oidc:'
         }
