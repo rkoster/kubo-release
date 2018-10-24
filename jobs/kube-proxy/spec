@@ -2,13 +2,13 @@
 name: kube-proxy
 
 templates:
-  bin/kube_proxy_ctl.erb: bin/kube_proxy_ctl
+  bin/pre-start.erb: bin/pre-start
+  config/bpm.yml.erb: config/bpm.yml
   config/kubeconfig.erb: config/kubeconfig
   config/config.yml.erb: config/config.yml
   config/ca.pem.erb: config/ca.pem
 
 packages:
-- pid_utils
 - kubernetes
 - conntrack
 

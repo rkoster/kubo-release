@@ -1,5 +1,5 @@
 check process kube-proxy
-  with pidfile /var/vcap/sys/run/kubernetes/kube-proxy.pid
-  start program "/var/vcap/jobs/kube-proxy/bin/kube_proxy_ctl start"
-  stop program "/var/vcap/jobs/kube-proxy/bin/kube_proxy_ctl stop"
+  with pidfile /var/vcap/sys/run/bpm/kube-proxy/kube-proxy.pid
+  start program "/var/vcap/jobs/bpm/bin/bpm start kube-proxy"
+  stop program "/var/vcap/jobs/bpm/bin/bpm stop kube-proxy"
   group vcap

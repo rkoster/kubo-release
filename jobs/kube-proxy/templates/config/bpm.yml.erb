@@ -1,0 +1,14 @@
+---
+processes:
+- name: kube-proxy
+  executable: /var/vcap/packages/kubernetes/bin/kube-proxy
+  args:
+  - --config /var/vcap/jobs/kube-proxy/config/config.yml
+  - --v=<%=p('logging-level') %>
+
+  unsafe:
+    unrestricted_volumes:
+      - path: /proc/sys
+        writable: true
+        allow_executions: false
+        mount_only: true
