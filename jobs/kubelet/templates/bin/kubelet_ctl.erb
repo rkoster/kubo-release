@@ -123,6 +123,7 @@ start_kubelet() {
     <% if_p('system-reserved') do |system_reserved| %>--system-reserved="<%= system_reserved %>"<% end %> \
     <% if_p('eviction-hard') do |eviction_hard| %>--eviction-hard="<%= eviction_hard %>"<% end %> \
     <% if_p('cni-conf-dir') do |cni_conf_dir| %>--cni-conf-dir="<%= cni_conf_dir %>" <% end %> \
+    <% if_p('hairpin-mode') do |hairpin-mode| %>--hairpin-mode="<%= hairpin-mode %>" <% end %> \
   1>> $LOG_DIR/kubelet.stdout.log \
   2>> $LOG_DIR/kubelet.stderr.log
 }

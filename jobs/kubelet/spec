@@ -76,6 +76,9 @@ properties:
   cni-conf-dir:
     description: Set the cni conf dir for a cni plugin.
     example: "/var/vcap/jobs/silk-cni/config/cni"
+  hairpin-mode:
+    description: "How should the kubelet setup hairpin NAT. Valid values are promiscuous-bridge, hairpin-veth and none"
+    default: "promiscuous-bridge"
 
 consumes:
 - name: cloud-provider
