@@ -70,6 +70,12 @@ properties:
   kubedns-service-ip:
     description: The service IP for kube-dns, must match what is configured for kube-dns
     default: "10.100.200.10"
+  cni-bin-dir:
+    description: Set the cni bin dir for a cni plugin.
+    default: /var/vcap/jobs/kubelet/packages/cni/bin
+  cni-conf-dir:
+    description: Set the cni conf dir for a cni plugin.
+    example: "/var/vcap/jobs/silk-cni/config/cni"
 
 consumes:
 - name: cloud-provider

@@ -20,6 +20,10 @@ setup_directories() {
   chown -R vcap:vcap "$RUN_DIR" "$LOG_DIR"
 }
 
+setup_iptables() {
+  modprobe br_netfilter
+  sysctl -w net.bridge.bridge-nf-call-iptables=1
+}
 send_process_stdout_to_logfile() {
   exec 1>> "$LOG_DIR/$NAME.stdout.log"
 }
@@ -46,6 +50,7 @@ start_kubernetes_proxy() {
  kube-proxy \
   --config /var/vcap/jobs/kube-proxy/config/config.yml \
   --v=<%=p('logging-level') %> \
+  <% if_p('proxy-mode') do |proxy_mode| %>--proxy-mode="<%= proxy_mode %>"<% end %> \
   1>> $LOG_DIR/kube_proxy.stdout.log \
   2>> $LOG_DIR/kube_proxy.stderr.log
 }
@@ -71,6 +76,9 @@ case $1 in
 
   start)
     setup_directories
+    <%= if p("proxy-mode", iptables) %>
+      setup_iptables
+    <% end %>
     send_process_stdout_to_logfile
     send_process_stderr_to_logfile
 
