@@ -100,11 +100,6 @@ start_kubelet() {
     end
   -%>
 
-# nasty hack
-ln -s -f /var/vcap/packages/cni/bin/loopback /var/vcap/packages/silk-cni/bin/loopback
-mv /var/vcap/packages/silk-cni/bin/silk-cni /var/vcap/packages/silk-cni/bin/silk-real
-cp /var/vcap/jobs/kubelet/bin/cni-wrapper /var/vcap/packages/silk-cni/bin/silk-cni
-
   kubelet \
     --allow-privileged=<%= p('allow_privileged') %> \
     <% if include_config -%>--cloud-config=${cloud_config}<% end %> \
