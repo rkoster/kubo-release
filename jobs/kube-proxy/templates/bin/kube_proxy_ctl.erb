@@ -76,7 +76,7 @@ case $1 in
 
   start)
     setup_directories
-    <%= if p("proxy-mode") == "iptables" %>
+    <% if p("proxy-mode") == "iptables" %>
       setup_iptables
     <% end %>
     send_process_stdout_to_logfile
