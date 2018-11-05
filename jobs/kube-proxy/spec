@@ -30,4 +30,4 @@ properties:
       hich proxy mode to use: 'userspace' (older) or 'iptables' (faster) or 'ipvs' (experimental).
       If blank, use the best-available proxy (currently iptables). If the iptables proxy is selected,
       regardless of how, but the system's kernel or iptables versions are insufficient, this always falls back to the userspace proxy.
-    # default: iptables
+    default: iptables
