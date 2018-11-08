@@ -28,7 +28,7 @@ ipvs:
   syncPeriod: 30s
 kind: KubeProxyConfiguration
 metricsBindAddress: 127.0.0.1:10249
-mode: iptables
+mode: <%= p('proxy-mode') %> 
 oomScoreAdj: -999
 portRange: ""
 resourceContainer: /kube-proxy

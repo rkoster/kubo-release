@@ -21,7 +21,7 @@ properties:
     description: The password for the kube-proxy user
   logging-level:
     description: "V-leveled logging at the specified level. See https://github.com/golang/glog"
-    default: 2
+    default: 4
   pod-network-cidr:
     description: The pod networking cidr for pod network overlay
     default: "10.200.0.0/16"
@@ -31,3 +31,7 @@ properties:
       If blank, use the best-available proxy (currently iptables). If the iptables proxy is selected,
       regardless of how, but the system's kernel or iptables versions are insufficient, this always falls back to the userspace proxy.
     default: iptables
+  proxy-mode-params:
+    description: |
+      default kube-proxy params to use with proxy-mode setting. E.g. --cleanup-ipvs for --proxy-mode=ipvs
+    default: ""
