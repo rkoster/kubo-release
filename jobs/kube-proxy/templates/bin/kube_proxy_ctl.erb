@@ -49,8 +49,8 @@ start_kubernetes_proxy() {
   sed -i "s|HOSTNAMEOVERRIDE|$(get_hostname_override)|g"  /var/vcap/jobs/kube-proxy/config/config.yml
   cont=true
   while $cont; do 
-    curl -s localhost:23954
-    if [ $0 -eq 0]; then
+    curl -s -f localhost:23954
+    if [ $? -eq 0 ]; then
       cont=false
     fi
   done
