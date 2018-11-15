@@ -43,16 +43,27 @@ get_hostname_override() {
   echo $hostname_override
 }
 
+
 start_kubernetes_proxy() {
 
   sed -i "s|HOSTNAMEOVERRIDE|$(get_hostname_override)|g"  /var/vcap/jobs/kube-proxy/config/config.yml
+  cont=true
+  while $cont; do 
+    curl -s localhost:23954
+    if [ $0 -eq 0]; then
+      cont=false
+    fi
+  done
+  SILK_CIDR="$(curl -s localhost:23954 | sed -n 's/.*"overlay_subnet":"\([^"]*\)".*/\1/p')"
 
- kube-proxy \
-  --config /var/vcap/jobs/kube-proxy/config/config.yml \
-  --v=<%=p('logging-level') %> \
-  <% if_p('proxy-mode') do |proxy_mode| %>--proxy-mode="<%= proxy_mode %>"<% end %> \
-  1>> $LOG_DIR/kube_proxy.stdout.log \
-  2>> $LOG_DIR/kube_proxy.stderr.log
+  kube-proxy \
+    --config /var/vcap/jobs/kube-proxy/config/config.yml \
+    --v=<%=p('logging-level') %> \
+    --cluster-cidr="$SILK_CIDR" \
+    <% if_p('proxy-mode') do |proxy_mode| %>--proxy-mode="<%= proxy_mode %>"<% end %> \
+    --cluster-cidr="$SILK_CIDR"
+    1>> $LOG_DIR/kube_proxy.stdout.log \
+    2>> $LOG_DIR/kube_proxy.stderr.log
 }
 
 stop_kubernetes_proxy() {
