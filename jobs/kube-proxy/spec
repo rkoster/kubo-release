@@ -35,3 +35,7 @@ properties:
     description: |
       default kube-proxy params to use with proxy-mode setting. E.g. --cleanup-ipvs for --proxy-mode=ipvs
     default: ""
+  silk-dynamic-cidr:
+    description: |
+      we cannot pre configure a cidr with cni's like silk as the /24 range for the worker will only be assigned at runtime. 
+    default: false
