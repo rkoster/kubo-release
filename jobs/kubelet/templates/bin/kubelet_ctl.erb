@@ -87,8 +87,11 @@ get_hostname_override() {
 }
 
 start_kubelet() {
+<% if p('silk-dynamic-cidr') %>
+  ln -s -f /var/vcap/jobs/silk-nsenter-wrapper/bin/nsenter /usr/bin/nsenter 
+<% else %>
   ln -s -f /var/vcap/jobs/kubelet/packages/cni/bin/nsenter /usr/bin/nsenter
-
+<% end %>
   zone_label=""
 
   if [[ "vsphere" == "$cloud_provider"  ]]; then

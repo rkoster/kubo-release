@@ -79,6 +79,11 @@ properties:
   hairpin-mode:
     description: "How should the kubelet setup hairpin NAT. Valid values are promiscuous-bridge, hairpin-veth and none"
     default: "promiscuous-bridge"
+  silk-dynamic-cidr:
+    description: |
+      we cannot pre configure a cidr with cni's like silk as the /24 range for the worker will only be assigned at runtime.
+    default: false
+
 
 consumes:
 - name: cloud-provider
