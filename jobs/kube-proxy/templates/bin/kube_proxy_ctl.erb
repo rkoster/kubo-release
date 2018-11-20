@@ -62,7 +62,7 @@ start_kubernetes_proxy() {
   kube-proxy \
     --config /var/vcap/jobs/kube-proxy/config/config.yml \
     --v=<%=p('logging-level') %> \
-    <% if p('silk-dynamic-cidr') %>--cluster-cidr="$SILK_CIDR" \ <% end %>
+    <% if p('silk-dynamic-cidr') %>--cluster-cidr="$SILK_CIDR" \<% end %>
     <% if_p('proxy-mode') do |proxy_mode| %>--proxy-mode="<%= proxy_mode %>"<% end %> \
     1>> $LOG_DIR/kube_proxy.stdout.log \
     2>> $LOG_DIR/kube_proxy.stderr.log
