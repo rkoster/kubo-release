@@ -47,7 +47,7 @@ get_hostname_override() {
 start_kubernetes_proxy() {
 
   sed -i "s|HOSTNAMEOVERRIDE|$(get_hostname_override)|g"  /var/vcap/jobs/kube-proxy/config/config.yml
-  <% if_p('silk-dynamic-cidr') %>
+  <% if p('silk-dynamic-cidr') %>
     cont=true
     while $cont; do 
       curl -s -f localhost:23954
