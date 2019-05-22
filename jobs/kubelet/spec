@@ -15,7 +15,7 @@ templates:
   config/openstack-ca.crt.erb: config/openstack-ca.crt
   config/service_key.json.erb: config/service_key.json
 packages:
-- pid_utils
+- kubo_pid_utils
 - kubernetes
 - cni
 - socat

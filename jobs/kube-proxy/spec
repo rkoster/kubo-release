@@ -8,7 +8,7 @@ templates:
   config/ca.pem.erb: config/ca.pem
 
 packages:
-- pid_utils
+- kubo_pid_utils
 - kubernetes
 - conntrack
 

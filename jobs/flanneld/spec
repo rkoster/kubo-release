@@ -8,7 +8,7 @@ templates:
   config/etcd-client.key.erb: config/etcd-client.key
 
 packages:
-- pid_utils
+- kubo_pid_utils
 - etcdctl
 - flanneld
 - cni
